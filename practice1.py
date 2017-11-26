@@ -370,7 +370,9 @@ def Sub_img(original):
     return sub_img
 
 def imageload():
+    global mouse_x1,mouse_y1,mouse_x2,mouse_y2
     var1 = sys.argv[1]
+    #var1 = cv2.resize(var1,(500,500))
     original = cv2.imread(var1,1)
     gray = cv2.imread(var1,0)
     NORMAL = cv2.WINDOW_NORMAL
@@ -385,6 +387,7 @@ def imageload():
     while True:
         
         cv2.imshow('imgloadview',b)
+        original_x,original_y,original_a=b.shape
         print(b.shape)
         k = cv2.waitKey(0)
         if k == 27:
@@ -401,5 +404,23 @@ def imageload():
             c=NORMAL
             cv2.destroyAllWindows()
         elif k == ord('c'):
-            b=Sub_img(original)
+            sub=Sub_img(original)
+            b=cv2.resize(sub,(original_x,original_y))
+        elif k == ord('.'):
+            mouse_x1,mouse_x2 = mouse_x1+10,mouse_x2+10
+            sub=Sub_img(original)
+            b=cv2.resize(sub,(original_x,original_y))
+        elif k == ord(','):
+            mouse_x1,mouse_x2 = mouse_x1-10,mouse_x2-10
+            sub=Sub_img(original)
+            b=cv2.resize(sub,(original_x,original_y))
+        elif k == ord(';'):
+            mouse_y1,mouse_y2 = mouse_y1+10,mouse_y2+10
+            sub=Sub_img(original)
+            b=cv2.resize(sub,(original_x,original_y))
+        elif k == ord('l'):
+            mouse_y1,mouse_y2 = mouse_y1-10,mouse_y2-10
+            sub=Sub_img(original)
+            b=cv2.resize(sub,(original_x,original_y)) 
+            
 imageload()
