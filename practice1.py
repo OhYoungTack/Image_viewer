@@ -329,20 +329,15 @@ def Ptransform():
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-def callBackF(event, x, y, flags, userdata):
-    if event==cv2.EVENT_LBUTTONDOWN:
-        mouse_x = x
-        mouse_y = y
-        print(x,y)
+
         
-ix,iy=1,2
 def image_viewer():
  #   mat_gray = []   
     global ix,iy
     print(ix,iy)
     var1 = sys.argv[1]
     img = cv2.imread(var1)
-   # cv2.cvtColor(img,mat_gray,CV_BGR2GRAY)
+    #cv2.cvtColor(img,mat_gray,CV_BGR2GRAY)
     cv2.namedWindow('ex1')
     #cv2.imshow('ex1',img)
     #cv2.imshow('ex2',mat_gray)
@@ -355,7 +350,56 @@ def image_viewer():
             break
 
     
-    cv2.destroyAllWindows()
+  #  cv2.destroyAllWindows()
+mouse_x1,mouse_y1,mouse_x2,mouse_y2=0,0,50,50
+def callBackF(event, x, y, flags, userdata):
+    #print(x,y)
+    global mouse_x1,mouse_y1,mouse_x2,mouse_y2
+    if event==cv2.EVENT_LBUTTONDOWN:
+        mouse_x1 = x
+        mouse_y1 = y
+        print(mouse_x1,mouse_y1)
+    elif event==cv2.EVENT_LBUTTONUP:
+        mouse_x2 = x
+        mouse_y2 = y
+        print(mouse_x2,mouse_y2)
 
-image_viewer()
+def Sub_img(original):
+    global mouse_x1,mouse_y1,mouse_x2,mouse_y2
+    sub_img = original[mouse_y1:mouse_y2,mouse_x1:mouse_x2]
+    return sub_img
 
+def imageload():
+    var1 = sys.argv[1]
+    original = cv2.imread(var1,1)
+    gray = cv2.imread(var1,0)
+    NORMAL = cv2.WINDOW_NORMAL
+    AUTO = cv2.WINDOW_AUTOSIZE
+    b=original
+    c= NORMAL
+    cv2.namedWindow('imgloadview',c)
+    cv2.setMouseCallback('imgloadview',callBackF,param=original)
+    
+
+    #cv2.namedWindow('practice2',cv2.WINDOW_AUTOSIZE)
+    while True:
+        
+        cv2.imshow('imgloadview',b)
+        print(b.shape)
+        k = cv2.waitKey(0)
+        if k == 27:
+            cv2.destroyAllWindows()
+            break
+        elif k == ord('g'):
+            b=gray
+        elif k == ord('r'):
+            b=original
+        elif k == ord('a'):
+            c=AUTO
+            cv2.destroyAllWindows()
+        elif k == ord('n'):
+            c=NORMAL
+            cv2.destroyAllWindows()
+        elif k == ord('c'):
+            b=Sub_img(original)
+imageload()
