@@ -27,6 +27,8 @@ def callBackF(event, x, y, flags, userdata):
         mouse_x2 = x
         mouse_y2 = y
         print(mouse_x2,mouse_y2)
+        
+    
 
 def Sub_img(original):
     global mouse_x1,mouse_y1,mouse_x2,mouse_y2
@@ -83,6 +85,7 @@ def imageload():
             elif k == ord('c'):
                 sub=Sub_img(original)
                 b=cv2.resize(sub,(original_y,original_x))
+                print('bbox size : ',mouse_x2-mouse_x1,mouse_y2-mouse_y1)
             elif k == ord(','):
                 #mouse_x1=cv2.getTrackbarPos('X','imageloadview')
                 #mouse_x2=cv2.getTrackbarPos('X','imageloadview')
