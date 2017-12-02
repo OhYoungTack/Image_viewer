@@ -9,10 +9,13 @@ def allfiles(path):
     res = []
 
     for root, dirs, files in os.walk(path):
-        rootpath = os.path.join(os.path.abspath(path), root)
+        rootpath = os.path.join(os.path.abspath(path))
+        print(rootpath)
 
         for file in files:
             filepath = os.path.join(rootpath, file)
+            print(rootpath)
+            print(filepath)
             res.append(filepath)
 
     return res
