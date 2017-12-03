@@ -4,19 +4,33 @@ import sys
 import os
 
 mouse_x1,mouse_y1,mouse_x2,mouse_y2,nextfile=0,0,50,50,1
-
+basename=[]
 def allfiles(path):
+    global nextfile, basename
     res = []
 
     for root, dirs, files in os.walk(path):
         rootpath = os.path.join(os.path.abspath(path))
-        print(rootpath)
-
+        #print(rootpath)
+        
         for file in files:
             filepath = os.path.join(rootpath, file)
-            print(rootpath)
+            #print(rootpath)
+            base = os.path.basename(filepath)
             print(filepath)
             res.append(filepath)
+        i=0
+        for file in files:
+            filepath = os.path.join(rootpath, file)
+            base = os.path.basename(filepath)
+            print(base)
+            print(basename)
+            if basename == base :
+                break
+            else:
+                i = i+1
+        nextfile = i
+        print(nextfile)
 
     return res
 def callBackF(event, x, y, flags, userdata):
@@ -30,9 +44,6 @@ def callBackF(event, x, y, flags, userdata):
         mouse_x2 = x
         mouse_y2 = y
         print(mouse_x2,mouse_y2)
-        
-    
-
 def Sub_img(original):
     global mouse_x1,mouse_y1,mouse_x2,mouse_y2
     sub_img = original[mouse_y1:mouse_y2,mouse_x1:mouse_x2]
@@ -41,10 +52,14 @@ def Sub_img(original):
 def onChange(x):
     pass
 def imageload():
-    global mouse_x1,mouse_y1,mouse_x2,mouse_y2,nextfile
+    global mouse_x1,mouse_y1,mouse_x2,mouse_y2,nextfile,basename
     out=0
     res = []
-    res = allfiles(sys.argv[1])
+    basename = os.path.basename(sys.argv[1])
+    print(basename)
+    print(os.path.dirname(sys.argv[1]))
+    dir = os.path.dirname(sys.argv[1])
+    res = allfiles(dir)
     dirsize = len(res)
     print(dirsize)
     print(res)
@@ -125,6 +140,9 @@ def imageload():
                 elif nextfile == 1 :
                     nextfile = dirsize-1
                     break
+            elif k == ord('b'):
+                b=cv2.rectangle(b,(mouse_x1,mouse_y1),(mouse_x2,mouse_y2),(255,0,0),2)
+                
         cv2.destroyAllWindows()
         if out==1:
             break
