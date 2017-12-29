@@ -8,7 +8,7 @@ basename=[]
 drawing = False
 capture = False
 drag = False
-drag_x,drag_y,original__x,original__y=0.,0.,0.,0.
+drag_x,drag_y,original__x,original__y=0.,0.,0,0
 crr_x1,crr_x2,crr_y1,crr_y2=0.,0.,0.,0.
 pro=2
 def init():
@@ -17,7 +17,7 @@ def init():
     drawing = False
     capture = False
     drag = False
-    drag_x,drag_y,original__x,original__y=0.,0.,0.,0.
+    drag_x,drag_y,original__x,original__y=0.,0.,0,0
     crr_x1,crr_x2,crr_y1,crr_y2=0.,0.,0.,0.
 def allfiles(path):
     global nextfile, basename
@@ -161,9 +161,12 @@ def imageload():
                 break
             elif k == ord('g'):
                 b=gray
+                #init()
+                capture = False
             elif k == ord('h'):
                 b=original_
-                init()
+                #init()
+                capture = False
             elif k == ord('a'):
                 window=AUTO
                 cv2.destroyAllWindows()
